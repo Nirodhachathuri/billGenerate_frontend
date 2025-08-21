@@ -1,0 +1,64 @@
+<div class="invoice-container">
+  <h2>Generate Invoice</h2>
+
+  <div>
+    <label>Customer Name:</label>
+    <input type="text" [(ngModel)]="customerName" />
+  </div><br>
+
+  <table style="width: 100%; text-align: center;">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Discount</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products; let i = index">
+        <td>
+          <select [(ngModel)]="p.productId" (ngModelChange)="onProductChange(p)">
+            <option *ngFor="let prod of productsList" [value]="prod.productId">
+              {{ prod.name }}
+            </option>
+          </select>
+        </td>
+
+        <td>{{ p.pricePerItem }}</td>
+
+        <td>
+          <input type="number" [(ngModel)]="p.qty" (ngModelChange)="updateTotals()" style="width: 60px;" />
+        </td>
+
+        <td>
+          <input type="number" [(ngModel)]="p.discount" (ngModelChange)="updateTotals()" style="width: 60px;" />
+        </td>
+
+        <td>{{ (p.pricePerItem * p.qty) - (p.discount || 0) }}</td>
+
+        <td>
+          <button (click)="removeProduct(i)">X</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="addEmptyRow()">+</button>
+
+  <h3>Total: {{ totalAmount }}</h3>
+
+  <!-- Customer Paid Amount -->
+  <div>
+    <label>Paid Amount:</label>
+    <input type="number" [(ngModel)]="paidAmount" (ngModelChange)="updateBalance()" />
+  </div>
+
+  <h3>Balance: {{ balanceAmount }}</h3>
+
+  <button (click)="generateInvoice()" [disabled]="!customerName || products.length === 0">
+    Generate & Print Invoice
+  </button>
+</div>

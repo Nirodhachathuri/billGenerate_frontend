@@ -1,0 +1,68 @@
+<div *ngIf="invoice" class="invoice-print" style="width: 800px; margin: auto; font-family: Arial, sans-serif;">
+  <!-- Header -->
+  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <div>
+      <h3>Your Logo</h3>
+    </div>
+    <div>
+      <p><strong>Invoice No:</strong> {{ invoice.invoiceId }}</p>
+      <p><strong>Invoice Date:</strong> {{ invoice.transactionDate | date:'mediumDate' }}</p>
+      <p><strong>Due Date:</strong> {{ invoice.transactionDate | date:'mediumDate' }}</p>
+    </div>
+  </div>
+
+  <!-- Customer / Company Details -->
+  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <div style="width: 45%; border: 1px solid #ccc; padding: 10px;">
+      <p><strong>Your details :</strong></p>
+      <p>MC Computers</p>
+      <p>123 Main Street, City</p>
+      <p>contact@mccomputers.com</p>
+    </div>
+    <div style="width: 45%; border: 1px solid #ccc; padding: 10px;">
+      <p><strong>Client's details :</strong></p>
+      <p>{{ customerName }}</p>
+    </div>
+  </div>
+
+  <!-- Table of Items -->
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+    <thead>
+      <tr style="border-bottom: 2px solid #000;">
+        <th style="text-align: left; padding: 8px;">Item</th>
+        <th style="text-align: right; padding: 8px;">HRS/QTY</th>
+        <th style="text-align: right; padding: 8px;">Rate</th>
+        <th style="text-align: right; padding: 8px;">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoice.items">
+        <td style="padding: 8px;">{{ getProductName(item.productId) }}</td>
+        <td style="padding: 8px; text-align: right;">{{ item.quantity }}</td>
+        <td style="padding: 8px; text-align: right;">{{ (item.totalPrice / item.quantity) | currency:'USD' }}</td>
+        <td style="padding: 8px; text-align: right;">{{ item.totalPrice | currency:'USD' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Invoice Summary -->
+  <div style="width: 300px; margin-left: auto; border-top: 2px solid #000; padding-top: 10px;">
+    <p style="display: flex; justify-content: space-between;">
+      <span>Subtotal:</span>
+      <span>{{ invoice.totalAmount | currency:'USD' }}</span>
+    </p>
+    <p style="display: flex; justify-content: space-between;">
+      <span>Paid Amount:</span>
+      <span>{{ invoice.paidAmount | currency:'USD' }}</span>
+    </p>
+    <p style="display: flex; justify-content: space-between;">
+      <span>Balance Amount:</span>
+      <span>{{ invoice.balanceAmount | currency:'USD' }}</span>
+    </p>
+  </div>
+
+  <!-- Print Button -->
+  <div style="text-align: center; margin-top: 20px;">
+    <button (click)="printPage()">Print</button>
+  </div>
+</div>

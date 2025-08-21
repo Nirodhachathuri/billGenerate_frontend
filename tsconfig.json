@@ -1,0 +1,33 @@
+{
+  "compileOnSave": false,
+ "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom",
+      "es5"
+    ],
+    "types": ["cypress", "jest", "jasmine", "node"],
+  },
+  // "angularCompilerOptions": {
+  //   "fullTemplateTypeCheck": true,
+  //   "strictInjectionParameters": true,
+  //   "enableIvy": false
+  // }
+  "include": ["**/*.ts"]
+}
